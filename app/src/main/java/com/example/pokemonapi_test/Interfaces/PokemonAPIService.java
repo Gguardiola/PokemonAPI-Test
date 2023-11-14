@@ -1,4 +1,6 @@
-package com.example.pokemonapi_test;
+package com.example.pokemonapi_test.Interfaces;
+
+import com.example.pokemonapi_test.Pokemon;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

@@ -13,6 +13,18 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp">
 
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragmentAPIMenu"
+            android:name="com.example.pokemonapi_test.APIMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragmentContainerMain"
+            android:name="com.example.pokemonapi_test.MainFragments.PokeDexFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <ImageView
             android:id="@+id/pokeimg_IMG"
             android:layout_width="wrap_content"
@@ -32,6 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Get Ditto info" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
