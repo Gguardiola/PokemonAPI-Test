@@ -41,9 +41,9 @@ public class PokeDexFragment extends Fragment {
 
     ArrayList<Pokemon> lPokemons;
 
-    private ArrayList<Pokemon> getPokemons(int limit){
+    private void getPokemons(int limit){
 
-        final ArrayList<Pokemon>[] p = new ArrayList[]{new ArrayList<>()};
+        //ArrayList<Pokemon> p = new ArrayList[]{new ArrayList<>()};
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://pokeapi.co/api/v2/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -54,8 +54,8 @@ public class PokeDexFragment extends Fragment {
             public void onResponse(Call<ArrayList<Pokemon>> call, Response<ArrayList<Pokemon>> response) {
                 ArrayList<Pokemon> p = response.body();
                 //TODO: fixear que recoja el results: []
-                for (Pokemon poke : res) {
-                    Log.d("item POKE", String.valueOf(p[0]));
+                for (Pokemon poke : p) {
+                    Log.d("item POKE", String.valueOf(poke));
                 }
 
                 Toast.makeText(getContext(), "GET ALL POKEMON YES", Toast.LENGTH_SHORT).show();
@@ -67,7 +67,7 @@ public class PokeDexFragment extends Fragment {
             }
         });
 
-        return p;
+        //return p;
     }
     public PokeDexFragment() {
         // Required empty public constructor
@@ -96,7 +96,8 @@ public class PokeDexFragment extends Fragment {
         View v = inflater.inflate(R.layout.activity_poke_dex_fragment, container, false);
 
         pokemonList = (RecyclerView)v.findViewById(R.id.pokedex_recycler);
-        lPokemons = getPokemons(20);
+        //lPokemons =
+        getPokemons(20);
         //TODO: crear el characterAdapter, ver line 167 de recyclerTest
         APIPokemonRecyclerViewAdapter adapter;
         adapter = new APIPokemonRecyclerViewAdapter(lPokemons, getContext());

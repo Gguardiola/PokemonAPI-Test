@@ -33,7 +33,7 @@ public class APIPokemonRecyclerViewAdapter extends RecyclerView.Adapter<APIPokem
     private MyViewHolder lastItem = null;
 
     public APIPokemonRecyclerViewAdapter(ArrayList<Pokemon> lPokemons, Context context) {
-        this.lPokemons = new ArrayList<>(lPokemons);
+        this.lPokemons = new ArrayList<Pokemon>(lPokemons);
         this.context = context;
     }
     public static class MyViewHolder extends RecyclerView.ViewHolder {
