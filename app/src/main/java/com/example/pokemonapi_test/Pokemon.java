@@ -7,6 +7,7 @@ public class Pokemon {
     String name;
     int height;
     int weight;
+    int id;
     Sprites sprites;
     List<AbilityData> abilities;
 
@@ -46,6 +47,8 @@ public class Pokemon {
     public int getWeight() {
         return weight;
     }
+    public int getId() { return id; }
+    public void setId() { this.id = id; }
 
     public void setWeight(int weight) {
         this.weight = weight;
