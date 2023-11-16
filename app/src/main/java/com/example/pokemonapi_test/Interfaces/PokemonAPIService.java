@@ -12,6 +12,7 @@ import retrofit2.http.Query;
 public interface PokemonAPIService {
     @GET("pokemon/{name}")
     Call<Pokemon> getPokemon(@Path("name") String name);
-    @GET("pokemon/")
-    Call<ArrayList<Pokemon>> getPokemonPagination(@Query("limit") int limit);
+    @GET("pokemon/{id}")
+    //TODO: creo que no puedo ahcer arraylist de pokemons
+    Call<Pokemon> getPokemonById(@Path("id") int id);
 }

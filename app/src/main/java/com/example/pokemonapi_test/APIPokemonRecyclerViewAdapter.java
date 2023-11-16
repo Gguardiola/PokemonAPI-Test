@@ -33,7 +33,7 @@ public class APIPokemonRecyclerViewAdapter extends RecyclerView.Adapter<APIPokem
     private MyViewHolder lastItem = null;
 
     public APIPokemonRecyclerViewAdapter(ArrayList<Pokemon> lPokemons, Context context) {
-        this.lPokemons = new ArrayList<Pokemon>(lPokemons);
+        this.lPokemons = new ArrayList<>(lPokemons);
         this.context = context;
     }
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -69,6 +69,7 @@ public class APIPokemonRecyclerViewAdapter extends RecyclerView.Adapter<APIPokem
     @Override
     public void onBindViewHolder(@NonNull APIPokemonRecyclerViewAdapter.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.pokeName.setText(lPokemons.get(position).getName());
+        Log.d("TEST POKE",String.valueOf(lPokemons.get(position).getName()));
         holder.pokeH.setText(lPokemons.get(position).getHeight());
         holder.pokeW.setText(lPokemons.get(position).getWeight());
         holder.pokeNum.setText(lPokemons.get(position).getId());
@@ -103,6 +104,7 @@ public class APIPokemonRecyclerViewAdapter extends RecyclerView.Adapter<APIPokem
     }
     public void setItems(ArrayList<Pokemon> lPokemons) {
         this.lPokemons = lPokemons;
+        Log.d("ADAPTER LOG:",String.valueOf(this.lPokemons.get(1).getName()));
     }
     public interface OnClickListener {
         void onClick(int position);

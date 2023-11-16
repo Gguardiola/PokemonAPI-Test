@@ -37,8 +37,7 @@ public class MainActivity extends AppCompatActivity implements FragmentHandler {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //TEST
-        getPokemons(20);
+
         fragments = new Fragment[3];
         fragments[0] = new PokeDexFragment();
         fragments[1] = new BerriesFragment();
@@ -88,32 +87,31 @@ public class MainActivity extends AppCompatActivity implements FragmentHandler {
 
     private void getPokemons(int limit){
         Log.d("GET POKEMONS API TEST","0");
-        //ArrayList<Pokemon> p = new ArrayList[]{new ArrayList<>()};
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://pokeapi.co/api/v2/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         PokemonAPIService pokeapis = retrofit.create(PokemonAPIService.class);
-        pokeapis.getPokemonPagination(limit).enqueue(new Callback<ArrayList<Pokemon>>() {
-            //TODO: FALLA AQUI!!
-            @Override
-            public void onResponse(Call<ArrayList<Pokemon>> call, Response<ArrayList<Pokemon>> response) {
-                Log.d("RECOGIDO, ITERANDO","0");
-                ArrayList<Pokemon> p = response.body();
-
-                //TODO: fixear que recoja el results: []
-                for (Pokemon poke : p) {
-                    Log.d("item POKE", String.valueOf(poke));
+        int id = limit;
+        for (int item = 0; item <= limit; item++){
+            int finalItem = item;
+            Log.d("HOLAA",String.valueOf(finalItem));
+            pokeapis.getPokemonById(item).enqueue(new Callback<Pokemon>() {
+                //TODO: FALLA AQUI!!
+                @Override
+                public void onResponse(Call<Pokemon> call, Response<Pokemon> response) {
+                    Log.d("APICALL POKE",String.valueOf(finalItem));
+                    Pokemon p = response.body();
+                    Toast.makeText(getApplicationContext(), "GETTING POKE", Toast.LENGTH_SHORT).show();
                 }
 
-                Toast.makeText(getApplicationContext(), "GET ALL POKEMON YES", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<Pokemon>> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "FAILED", Toast.LENGTH_SHORT).show();
-            }
-        });
+                @Override
+                public void onFailure(Call<Pokemon> call, Throwable t) {
+                    Log.d("FAILED!",String.valueOf(finalItem));
+                    Toast.makeText(getApplicationContext(), "FAILED", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
     @Override
     public void changeFragment(int k) {
