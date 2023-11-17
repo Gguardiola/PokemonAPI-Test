@@ -19,26 +19,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <ImageView
-            android:id="@+id/pokeimg_IMG"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            app:srcCompat="@drawable/ic_launcher_background" />
-
-        <TextView
-            android:id="@+id/poketxt_TXT"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Hello World!" />
-
-        <Button
-            android:id="@+id/callAPI_BTN"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Get Ditto info" />
-
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragmentContainerMain"
             android:name="com.example.pokemonapi_test.MainFragments.PokeDexFragment"

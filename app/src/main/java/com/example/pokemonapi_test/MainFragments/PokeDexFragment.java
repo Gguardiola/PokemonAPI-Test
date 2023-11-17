@@ -45,8 +45,7 @@ public class PokeDexFragment extends Fragment {
 
     ArrayList<Pokemon> lPokemons;
 
-    private ArrayList<Pokemon> getPokemons(int limit){
-        ArrayList <Pokemon> aux_lPokemons = new ArrayList();
+    private void getPokemons(APIPokemonRecyclerViewAdapter pokedexAdapter, int limit){
         Log.d("GET POKEMONS API TEST","0");
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://pokeapi.co/api/v2/")
@@ -54,14 +53,15 @@ public class PokeDexFragment extends Fragment {
                 .build();
         PokemonAPIService pokeapis = retrofit.create(PokemonAPIService.class);
         int id = limit;
-        for (int item = 0; item <= limit; item++){
+        for (int item = 0; item < limit; item++){
             int finalItem = item;
             pokeapis.getPokemonById(item).enqueue(new Callback<Pokemon>() {
                 @Override
                 public void onResponse(Call<Pokemon> call, Response<Pokemon> response) {
                     Log.d("APICALL POKE",String.valueOf(finalItem));
                     Pokemon p = response.body();
-                    aux_lPokemons.add(p);
+                    pokedexAdapter.addItem(p);
+                    pokedexAdapter.notifyDataSetChanged();
                 }
 
                 @Override
@@ -71,7 +71,6 @@ public class PokeDexFragment extends Fragment {
             });
         }
         Log.d("FINISH?","NO");
-        return aux_lPokemons;
     }
     public PokeDexFragment() {
 
@@ -102,22 +101,24 @@ public class PokeDexFragment extends Fragment {
         View v = inflater.inflate(R.layout.activity_poke_dex_fragment, container, false);
 
         pokemonList = (RecyclerView)v.findViewById(R.id.pokedex_recycler);
-        lPokemons = getPokemons(20);
+
         //TODO: crear el characterAdapter, ver line 167 de recyclerTest
         APIPokemonRecyclerViewAdapter adapter;
-        adapter = new APIPokemonRecyclerViewAdapter(lPokemons, this.getContext());
-        RecyclerView.LayoutManager l = new LinearLayoutManager(this.getContext());
+        Toast.makeText(this.getActivity().getApplicationContext(), "CREO EL ADAPTER", Toast.LENGTH_SHORT).show();
+        adapter = new APIPokemonRecyclerViewAdapter(this.getActivity().getApplicationContext());
+        RecyclerView.LayoutManager l = new LinearLayoutManager(this.getActivity().getApplicationContext());
         pokemonList.setLayoutManager(l);
         pokemonList.setItemAnimator(new DefaultItemAnimator());
         pokemonList.setAdapter(adapter);
+
+        getPokemons(adapter, 20);
 
         testRecall = (Button) v.findViewById(R.id.recall_btn);
         testRecall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                lPokemons.get(1).setName("pep");
-                adapter.setItems(lPokemons);
-                Log.d("TEST RECALL",String.valueOf(lPokemons.get(1).getName()));
+                int count = adapter.getItemCount();
+                Log.d("ITEM COUNT:",String.valueOf(count));
             }
         });
 

@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,8 +34,14 @@ public class APIPokemonRecyclerViewAdapter extends RecyclerView.Adapter<APIPokem
 
     private MyViewHolder lastItem = null;
 
-    public APIPokemonRecyclerViewAdapter(ArrayList<Pokemon> lPokemons, Context context) {
-        this.lPokemons = new ArrayList<>(lPokemons);
+    public APIPokemonRecyclerViewAdapter(Context context) {
+        this.lPokemons = new ArrayList<>();
+        Pokemon pokePlaceholder = new Pokemon();
+        pokePlaceholder.setName("Pedro Sanchez");
+        pokePlaceholder.setId(1);
+        pokePlaceholder.setHeight(20);
+        pokePlaceholder.setWeight(25);
+        lPokemons.add(pokePlaceholder);
         this.context = context;
     }
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -60,7 +68,7 @@ public class APIPokemonRecyclerViewAdapter extends RecyclerView.Adapter<APIPokem
     @NonNull
     @Override
     public APIPokemonRecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View viewHolder = LayoutInflater.from(context).inflate(R.layout.activity_poke_dex_fragment, parent, false);
+        View viewHolder = LayoutInflater.from(context).inflate(R.layout.activity_recycler_pokedex, parent, false);
         viewHolder.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         return new MyViewHolder(viewHolder);
@@ -70,10 +78,11 @@ public class APIPokemonRecyclerViewAdapter extends RecyclerView.Adapter<APIPokem
     public void onBindViewHolder(@NonNull APIPokemonRecyclerViewAdapter.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.pokeName.setText(lPokemons.get(position).getName());
         Log.d("TEST POKE",String.valueOf(lPokemons.get(position).getName()));
-        holder.pokeH.setText(lPokemons.get(position).getHeight());
-        holder.pokeW.setText(lPokemons.get(position).getWeight());
-        holder.pokeNum.setText(lPokemons.get(position).getId());
-        Glide.with(context).load(lPokemons.get(position).sprites.front_default).into(holder.pokeImg);
+        Toast.makeText(context,"HOLA",Toast.LENGTH_SHORT).show();
+        holder.pokeH.setText(String.valueOf(lPokemons.get(position).getHeight()));
+        holder.pokeW.setText(String.valueOf(lPokemons.get(position).getWeight()));
+        holder.pokeNum.setText(String.valueOf(lPokemons.get(position).getId()));
+        //Glide.with(holder.itemView.getContext()).load(lPokemons.get(position).sprites.front_default).into(holder.pokeImg);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,9 +111,10 @@ public class APIPokemonRecyclerViewAdapter extends RecyclerView.Adapter<APIPokem
         lastItem.pokeCard.setBackgroundColor(Color.parseColor("#EEEEEE"));
 
     }
-    public void setItems(ArrayList<Pokemon> lPokemons) {
-        this.lPokemons = lPokemons;
-        Log.d("ADAPTER LOG:",String.valueOf(this.lPokemons.get(1).getName()));
+    public void addItem(Pokemon iPokemons) {
+        ArrayList<Pokemon> pokeAux = new ArrayList<>(lPokemons);
+        pokeAux.add(iPokemons);
+        this.lPokemons = pokeAux;
     }
     public interface OnClickListener {
         void onClick(int position);

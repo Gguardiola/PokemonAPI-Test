@@ -43,9 +43,9 @@ public class MainActivity extends AppCompatActivity implements FragmentHandler {
         fragments[1] = new BerriesFragment();
         fragments[2] = new ItemsFragment();
 
-        Button b= (Button) findViewById(R.id.callAPI_BTN);
-        TextView t = (TextView) findViewById(R.id.poketxt_TXT);
-        ImageView imgV = (ImageView) findViewById(R.id.pokeimg_IMG);
+       // Button b= (Button) findViewById(R.id.callAPI_BTN);
+       // TextView t = (TextView) findViewById(R.id.poketxt_TXT);
+       // ImageView imgV = (ImageView) findViewById(R.id.pokeimg_IMG);
 
         ViewModelHandler model = new ViewModelProvider(this).get(ViewModelHandler.class);
 
@@ -58,61 +58,33 @@ public class MainActivity extends AppCompatActivity implements FragmentHandler {
 
         model.getModel().observe(this, nameObserver);
 
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("https://pokeapi.co/api/v2/")
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
-                PokemonAPIService pokeapis = retrofit.create(PokemonAPIService.class);
-                pokeapis.getPokemon("ditto").enqueue(new Callback<Pokemon>() {
-                    @Override
-                    public void onResponse(Call<Pokemon> call, Response<Pokemon> response) {
-                        Pokemon p = response.body();
-                        Toast.makeText(getApplicationContext(), p.getName(), Toast.LENGTH_SHORT).show();
-                        t.setText(p.getName() + p.getHeight()+p.getWeight());
-                        Glide.with(getApplicationContext()).load(p.sprites.front_default).into(imgV);
-                        model.setName(t.getText().toString());
-                    }
-
-                    @Override
-                    public void onFailure(Call<Pokemon> call, Throwable t) {
-                        Toast.makeText(getApplicationContext(), "FAILED", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
+     //   b.setOnClickListener(new View.OnClickListener() {
+     //       @Override
+     //       public void onClick(View view) {
+     //           Retrofit retrofit = new Retrofit.Builder()
+     //                   .baseUrl("https://pokeapi.co/api/v2/")
+     //                   .addConverterFactory(GsonConverterFactory.create())
+     //                   .build();
+     //           PokemonAPIService pokeapis = retrofit.create(PokemonAPIService.class);
+     //           pokeapis.getPokemon("ditto").enqueue(new Callback<Pokemon>() {
+     //               @Override
+     //               public void onResponse(Call<Pokemon> call, Response<Pokemon> response) {
+     //                   Pokemon p = response.body();
+     //                   Toast.makeText(getApplicationContext(), p.getName(), Toast.LENGTH_SHORT).show();
+     //                   t.setText(p.getName() + p.getHeight()+p.getWeight());
+     //                   Glide.with(getApplicationContext()).load(p.sprites.front_default).into(imgV);
+     //                   model.setName(t.getText().toString());
+     //               }
+//
+     //               @Override
+     //               public void onFailure(Call<Pokemon> call, Throwable t) {
+     //                   Toast.makeText(getApplicationContext(), "FAILED", Toast.LENGTH_SHORT).show();
+     //               }
+     //           });
+     //       }
+     //   });
     }
 
-    private void getPokemons(int limit){
-        Log.d("GET POKEMONS API TEST","0");
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://pokeapi.co/api/v2/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        PokemonAPIService pokeapis = retrofit.create(PokemonAPIService.class);
-        int id = limit;
-        for (int item = 0; item <= limit; item++){
-            int finalItem = item;
-            Log.d("HOLAA",String.valueOf(finalItem));
-            pokeapis.getPokemonById(item).enqueue(new Callback<Pokemon>() {
-                //TODO: FALLA AQUI!!
-                @Override
-                public void onResponse(Call<Pokemon> call, Response<Pokemon> response) {
-                    Log.d("APICALL POKE",String.valueOf(finalItem));
-                    Pokemon p = response.body();
-                    Toast.makeText(getApplicationContext(), "GETTING POKE", Toast.LENGTH_SHORT).show();
-                }
-
-                @Override
-                public void onFailure(Call<Pokemon> call, Throwable t) {
-                    Log.d("FAILED!",String.valueOf(finalItem));
-                    Toast.makeText(getApplicationContext(), "FAILED", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-    }
     @Override
     public void changeFragment(int k) {
         FragmentManager fgmng = getSupportFragmentManager();

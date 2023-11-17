@@ -48,7 +48,7 @@ public class Pokemon {
         return weight;
     }
     public int getId() { return id; }
-    public void setId() { this.id = id; }
+    public void setId(int i) { this.id = id; }
 
     public void setWeight(int weight) {
         this.weight = weight;
